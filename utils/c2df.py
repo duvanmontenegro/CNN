@@ -1,13 +1,28 @@
 ##
 import numpy as np
 import mne
-def converttoDataFrame(raw):
+import glob
+def converttoDataFrame(raw,name):
+    # raw=addAnnotation(raw,name)
     sampling_freq = raw.info['sfreq']
     start_end_secs = np.array([1, 12])
     start_sample, stop_sample = (start_end_secs * sampling_freq).astype(int)
     df = raw.to_data_frame(picks=['eeg'], start=start_sample, stop=stop_sample)
+    df[['user']] = name
+    df.drop(['user'], axis=1)
+    print("")
+    print(raw.to_data_frame(picks=['eeg'], start=start_sample, stop=stop_sample).head())
+
     df.to_csv(index=False)
-    df.to_csv (r'C:\Users\Dsmith\Dropbox\Tesis\Codigo\CNN\project\export_dataframe.csv', index = False, header=True)
+    df.to_csv(r'C:\Users\Dsmith\Documents\CNN\project\CSV\all\export_dataframe'+name+'.csv', index = False, header=True)
+
+    print("")
+    print(df)
+    print("")
+    del(df['user'])
+    print("")
+    print(df)
+    print("")
 
     return df
 

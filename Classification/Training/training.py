@@ -23,13 +23,14 @@ import pandas as pd
 import pickle
 import openpyxl
 
-def readBdf(path,lowfrec,highpass,canales):
+def readBdf(path,lowfrec,highpass,canales,name):
     raw = mne.io.read_raw_bdf(path, preload=True)
     raw_selection = raw.crop(tmin=1, tmax=12)
     raw_selection.pick_channels(canales)
     eeg_picks = mne.pick_types(raw_selection.info, eeg=True)
     raw_filtered=filters(raw_selection,eeg_picks,lowfrec,highpass)
-    df=converttoDataFrame(raw_filtered)
+    # df=converttoDataFrame(raw_filtered)
+    df=converttoDataFrame(raw_filtered, name)
     # print(df.shape)
     # print(df.iloc[:10, ::])
     return df
@@ -94,9 +95,14 @@ class training(object):
 		flag = True
 		canales=self.canales
 		for bdfPath in bdfPaths:
+			print("bdfPath:",bdfPath)
 			filename = os.path.join(path_code, bdfPath)
-			df=readBdf(filename,lowfrec,highpass,canales)
+			palabra = bdfPath.replace("dataset","").replace("\insatisfecho","").replace("\satisfecho","").replace("\S","S").replace("\I","I").split(".")[0]
+			df=readBdf(filename,lowfrec,highpass,canales,palabra)
+			print("palabra:",palabra)
+
 			bdf = df.to_numpy()
+			print("bdf:",bdf)
 			if flag == True:
 				heightData = bdf.shape[0]
 				withData = bdf.shape[1]
@@ -108,10 +114,12 @@ class training(object):
 			label = self.labeled(label)
 			labels.append(label)
 			listaD.append(bdfPath)
-			clear()
+			# clear()
 
 		data = np.array(data, dtype="float")
 		labels = np.array(labels)
+		print("Data:",data)
+		print("labels:",labels)
 
 		(trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=split_test_size, random_state=seed)
 

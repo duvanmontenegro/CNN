@@ -21,7 +21,7 @@ noptimi="RMSprop"
 # noptimi="sgd"
 # narquitec="RandomF"
 narquitec="AlexNet"
-cdestino="csvpone" 
+cdestino="csvp1" 
 for i in range(0,2):
 	trainer = training(path_to_dataset=dataset, 
 		save_to_dir_model=model_dir, 
