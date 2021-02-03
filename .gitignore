@@ -336,3 +336,5 @@ dataset
 modelos
 export_dataframe.csv
 all
+exportdf.csv
+exportdf.txt
