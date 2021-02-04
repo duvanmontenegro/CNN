@@ -9,13 +9,22 @@ import csv
 print(' *** Using pandas.read_csv() with multiple char delimiters ***')
 
 # Read a csv file to a dataframe with multiple delimiters in regular expression
-# df =  pd.read_csv('exportdf.csv',  sep='[:,|_]', engine='python')
-df =  pd.read_csv('all\export_dataframeInsatisfecho-u2-1.csv',  sep='[:,|_]', engine='python')
+df =  pd.read_csv('exportdfv1-2.csv',  sep='[:,|_]', engine='python')
+# df =  pd.read_csv('all\export_dataframeInsatisfecho-u2-1.csv',  sep='[:,|_]', engine='python')
 # df['group_num'] = df.groupby('user')['EEG 1'].transform(lambda x: range(1, len(x)+1))
-df['group_num'] = df.groupby('user')['time'].transform(lambda x: range(1, len(x)+1))
-# df.columns = [''.join([lvl1, str(lvl2)]) for lvl1, lvl2 in df.columns]
-df.pivot(index='user', columns='group_num')
+# df['id'] = df.groupby('user')['time'].transform(lambda x: range(1, len(x)+1))#FuncionaMedio
+# df['group_num'] = df.groupby('user')['id'].transform(lambda x: range(1, len(x)+1))
 print(df)
+# df.columns = [''.join([lvl1, str(lvl2)]) for lvl1, lvl2 in df.columns]
+# df.pivot(index='user', columns='group_num')user,1,time,EEG 1,EEG 2,EEG 3,EEG 4,EEG 5,EEG 6,EEG 7,EEG 8,EEG 9
+df.pivot(index='user', columns='id', values=['time','EEG 1','EEG 2','EEG 3','EEG 4','EEG 5','EEG 6','EEG 7','EEG 8','EEG 9'])
+# df.columns = [''.join([lvl1, str(lvl2)]) for lvl1, lvl2 in df.columns]
+# df = df[['user','id','time','EEG 1','EEG 2','EEG 3','EEG 4','EEG 5','EEG 6','EEG 7','EEG 8','EEG 9']]
+
+print(df)
+# df.to_csv(r'C:\Users\Dsmith\Documents\Tesis\CNN\project\CSV\export_dataframe.csv', index = False, header=True)
+# df.to_csv(r'C:\Users\Dsmith\Documents\Tesis\CNN\project\CSV\exportdfv3.csv', index = False, header=True)
+# df.to_csv(r'C:\Users\Dsmith\Documents\Tesis\CNN\project\CSV\exportdfv1-2.csv', index = False, header=True)
 
 # def main():
 
