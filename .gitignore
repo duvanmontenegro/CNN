@@ -336,7 +336,8 @@ dataset
 modelos
 export_dataframe.csv
 all
-
+*.csv
+*.ows
 exportdf.txt
 
 exportdfv2.csv
